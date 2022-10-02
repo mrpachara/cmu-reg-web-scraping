@@ -18,7 +18,7 @@ export async function process(
   groups: string[],
   extractCourses: CoursesExtractor,
   extractSection: SectionExtractor,
-  output: (courseSections: CourseSection[]) => void,
+  output: (courseSections: CourseSection[]) => Promise<void>,
 ) {
   const url = new URL(cmuRegUrl);
   url.searchParams.set('tterm', semester);
@@ -93,5 +93,6 @@ export async function process(
       });
     });
 
-  output(courseSections);
+  await output(courseSections);
+  console.log('🏁 output has been created.');
 }

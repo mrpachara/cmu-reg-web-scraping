@@ -28,9 +28,9 @@ export const extractCourses: CoursesExtractor = (
   return [...courseDatas].reduce((results, node, i) => {
     if (i % 2 === 0) {
       const title = getFirstLine(node.textContent.trim()).trim();
-      const [code, name] = title
-        .split(/\s*-\s*/, 2)
-        .map((value) => value.trim());
+      const [, code = 'Unknown', name = 'Unknown'] = (
+        title.match(/^([^\-\s]*)\s*-\s*(.*)$/u) || []
+      ).map((value) => value.trim());
 
       results.push({
         code: code,
@@ -56,7 +56,7 @@ export const extractSection: SectionExtractor = (
   name: string,
   sectionElem: Element,
 ): CourseSection => {
-  const columnNodes = sectionElem.childNodes;
+  const columnNodes = sectionElem.querySelectorAll(':scope>td');
 
   const status = normailizeText(columnNodes[0].textContent)
     .filter((value) => value !== '')
@@ -64,18 +64,19 @@ export const extractSection: SectionExtractor = (
   const condition = normailizeText(columnNodes[1].textContent)
     .filter((value) => value !== '')
     .join(', ');
-  const remark = normailizeText(columnNodes[2].textContent)[1];
+  const remark =
+    normailizeText(columnNodes[2].textContent.replace(name, ''))[0] || '';
   const secLec = normailizeText(columnNodes[3].textContent)[0];
   const secLab = normailizeText(columnNodes[4].textContent)[0];
   const creditLec = normailizeText(columnNodes[5].textContent)[0];
   const creditLab = normailizeText(columnNodes[6].textContent)[0];
-  const [scheduleLecDay, scheduleLabDay] = normailizeText(
+  const [scheduleLecDay, scheduleLabDay = ''] = normailizeText(
     columnNodes[7].textContent,
   );
-  const [scheduleLecTime, scheduleLabTime] = normailizeText(
+  const [scheduleLecTime, scheduleLabTime = ''] = normailizeText(
     columnNodes[8].textContent,
   );
-  const [roomLec, roomLab] = normailizeText(columnNodes[9].textContent);
+  const [roomLec, roomLab = ''] = normailizeText(columnNodes[9].textContent);
   const lecturer = normailizeText(columnNodes[10].textContent)
     .filter((value) => value !== '')
     .join(', ');

@@ -46,7 +46,7 @@ const semester = ((value) => (value === undefined ? undefined : String(value)))(
   args['s'] ?? args['semester'],
 );
 const outputFile = ((value) =>
-  value === undefined ? undefined : String(value))(args['0'] ?? args['output']);
+  value === undefined ? undefined : String(value))(args['o'] ?? args['output']);
 const groups = args._.map((value) => value.toString());
 
 if (args['h'] || args['help']) {
@@ -63,17 +63,26 @@ if (args['h'] || args['help']) {
   Deno.exit(-1);
 }
 
-const fp = await Deno.open(outputFile, { create: true, write: true });
+const fp = await Deno.open(outputFile, {
+  create: true,
+  write: true,
+});
+
+//fp.write(Uint8Array.from("\ufeff"));
+fp.write(Uint8Array.from([0xef, 0xbb, 0xbf]));
 
 await process(
   semester,
   groups,
   extractCourses,
   extractSection,
-  (courseSections: CourseSection[]) => {
+  async (courseSections: CourseSection[]) => {
     if (courseSections.length > 0) {
       const tmpObj = courseSections[0];
-      writeCSVObjects(fp, courseSections, { header: Object.keys(tmpObj) });
+
+      await writeCSVObjects(fp, courseSections, {
+        header: Object.keys(tmpObj),
+      });
     }
   },
 );
