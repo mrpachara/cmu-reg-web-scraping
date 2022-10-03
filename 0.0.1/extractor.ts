@@ -8,8 +8,8 @@ import {
   CoursesExtractor,
   Nullable,
   SectionExtractor,
-} from '../lib/types.ts';
-import { getFirstLine, normailizeText } from '../lib/utils.ts';
+} from './types.ts';
+import { getFirstLine, normailizeText } from './utils.ts';
 
 export const extractCourses: CoursesExtractor = (
   doc: HTMLDocument,

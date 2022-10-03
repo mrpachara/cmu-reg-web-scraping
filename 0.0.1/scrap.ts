@@ -1,7 +1,7 @@
 import { parse } from 'https://deno.land/std@0.158.0/flags/mod.ts';
 import { writeCSVObjects } from 'https://deno.land/x/csv@v0.7.5/mod.ts';
-import { process } from '../lib/processor.ts';
-import { CourseSection } from '../lib/types.ts';
+import { process } from './processor.ts';
+import { CourseSection } from './types.ts';
 import { extractCourses, extractSection } from './extractor.ts';
 
 export const VERSION = '0.0.1';
@@ -66,9 +66,10 @@ if (args['h'] || args['help']) {
 const fp = await Deno.open(outputFile, {
   create: true,
   write: true,
+  truncate: true,
 });
 
-//fp.write(Uint8Array.from("\ufeff"));
+// BOM utf-8
 fp.write(Uint8Array.from([0xef, 0xbb, 0xbf]));
 
 await process(
