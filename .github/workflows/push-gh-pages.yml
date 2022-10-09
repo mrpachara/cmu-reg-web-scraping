@@ -37,4 +37,4 @@ jobs:
           cd ./gh-pages
           git add .
           git commit -m "${{ github.actor }} publis version ${{ env.VERSION }}"
-          git push orgin gh-pages
+          git push origin gh-pages
