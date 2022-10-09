@@ -30,6 +30,7 @@ jobs:
       - name: Add new version to push directory
         run: |
           rm -rf ./gh-pages/${{ env.VERSION }}
+          mkdir -p ./gh-pages/${{ env.VERSION }}
           cp -rf ./src/* ./gh-pages/${{ env.VERSION }}/
       - name: Push to gh-pages
         run: |
