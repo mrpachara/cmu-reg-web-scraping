@@ -20,6 +20,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
       - name: Create push directory
         run: |
+          set -e
           mkdir gh-pages
           git init -b gh-pages ./gh-pages
           cd ./gh-pages
@@ -27,7 +28,7 @@ jobs:
           https://git:${{ github.token }}@github.com/${{ github.repository }}.git
           git pull origin gh-pages
           cd ..
-      - name: Create publish version ${{ env.VERSION }}
+      - name: Add new version to push directory
         run: |
           rm -rf ./gh-pages/${VERSION}
           cp -rf ./src/* ./gh-pages/${VERSION}/
