@@ -29,11 +29,11 @@ jobs:
           cd ..
       - name: Add new version to push directory
         run: |
-          rm -rf ./gh-pages/${VERSION}
-          cp -rf ./src/* ./gh-pages/${VERSION}/
+          rm -rf ./gh-pages/${{ env.VERSION }}
+          cp -rf ./src/* ./gh-pages/${{ env.VERSION }}/
       - name: Push to gh-pages
         run: |
           cd ./gh-pages
           git add .
-          git commit -m "${{ github.actor }} publis version ${VERSION}"
+          git commit -m "${{ github.actor }} publis version ${{ env.VERSION }}"
           git push orgin gh-pages
