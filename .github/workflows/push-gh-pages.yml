@@ -8,12 +8,12 @@ jobs:
   push-gh-pages:
     runs-on: ubuntu-latest
     env:
-      TAG_NAME: ${{ github.event.release.tag_name }}
+      RELEASE_TAG: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup environment variables
         run: |
-          echo "VERSION=${TAG_NAMES#v} >> $GITHUB_ENV"
+          echo "VERSION=${RELEASE_TAG#v} >> $GITHUB_ENV"
       - name: Setup git user
         run: |
           git config --global user.email "${{ github.event.pusher.email }}"
