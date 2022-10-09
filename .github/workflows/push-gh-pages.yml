@@ -1,5 +1,5 @@
 name: push-gh-pages
-name-run: ${{ github.actor }} is pushing gh-pages
+run-name: ${{ github.actor }} is pushing gh-pages
 on:
   release:
     types: [published]
