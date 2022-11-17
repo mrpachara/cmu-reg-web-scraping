@@ -21,8 +21,8 @@ export type CourseSection = {
   name: string;
   secLec: string;
   secLab: string;
-  creditLec: string;
-  creditLab: string;
+  creditLec: number;
+  creditLab: number;
   scheduleLecDay: string;
   scheduleLecTime: string;
   scheduleLabDay: string;
@@ -32,12 +32,12 @@ export type CourseSection = {
   lecturer: string;
   examDate: string;
   examTime: string;
-  seat: string;
-  enroll: string;
-  waitingAdd: string;
-  waitingIn: string;
-  waitingOut: string;
-  waitingDrop: string;
+  seat: number;
+  enroll: number;
+  waitingAdd: number | null;
+  waitingIn: number | null;
+  waitingOut: number | null;
+  waitingDrop: number | null;
 };
 
 export type CoursesExtractor = (

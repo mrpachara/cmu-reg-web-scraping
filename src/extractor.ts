@@ -19,6 +19,7 @@ export const extractCourses: CoursesExtractor = (
   );
 
   if (resultTables.length < 2) {
+    console.debug('result length: ', resultTables.length);
     return null;
   }
 
@@ -68,8 +69,8 @@ export const extractSection: SectionExtractor = (
     normailizeText(columnNodes[2].textContent.replace(name, ''))[0] || '';
   const secLec = normailizeText(columnNodes[3].textContent)[0];
   const secLab = normailizeText(columnNodes[4].textContent)[0];
-  const creditLec = normailizeText(columnNodes[5].textContent)[0];
-  const creditLab = normailizeText(columnNodes[6].textContent)[0];
+  const creditLec = parseInt(normailizeText(columnNodes[5].textContent)[0]);
+  const creditLab = parseInt(normailizeText(columnNodes[6].textContent)[0]);
   const [scheduleLecDay, scheduleLabDay = ''] = normailizeText(
     columnNodes[7].textContent,
   );
@@ -82,12 +83,12 @@ export const extractSection: SectionExtractor = (
     .join(', ');
   const examDate = normailizeText(columnNodes[11].textContent)[0];
   const examTime = normailizeText(columnNodes[12].textContent)[0];
-  const seat = normailizeText(columnNodes[13].textContent)[0];
-  const enroll = normailizeText(columnNodes[14].textContent)[0];
-  const waitingAdd = normailizeText(columnNodes[15].textContent)[0];
-  const waitingIn = normailizeText(columnNodes[16].textContent)[0];
-  const waitingOut = normailizeText(columnNodes[17].textContent)[0];
-  const waitingDrop = normailizeText(columnNodes[18].textContent)[0];
+  const seat = parseInt(normailizeText(columnNodes[13].textContent)[0]);
+  const enroll = parseInt(normailizeText(columnNodes[14].textContent)[0]);
+
+  const [waitingAdd, waitingIn, waitingOut, waitingDrop] = [15, 16, 17, 18]
+    .map((i) => parseInt(normailizeText(columnNodes[i].textContent)[0]))
+    .map((num) => (isNaN(num) ? null : num));
 
   return {
     status,

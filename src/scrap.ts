@@ -8,7 +8,7 @@ import { process } from './processor.ts';
 import { CourseSection } from './types.ts';
 import { extractCourses, extractSection } from './extractor.ts';
 
-export const VERSION = '0.0.2';
+export const VERSION = '0.0.3';
 
 function printHelp(progName: string, errorMessage?: string) {
   if (errorMessage) {
@@ -43,7 +43,7 @@ function printHelp(progName: string, errorMessage?: string) {
 const progName = (() => {
   const url = import.meta.url;
   if (url.startsWith('file:')) {
-    return `./${VERSION}/scrap.ts`;
+    return `./src/scrap.ts`;
   } else {
     return url;
   }
